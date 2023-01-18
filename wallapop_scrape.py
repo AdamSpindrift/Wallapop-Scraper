@@ -18,6 +18,9 @@ def wallapopScrape(url):
     driver.get(url)
 
     driver.find_element(By.ID,"onetrust-accept-btn-handler").click()
+    time.sleep(5)
+    driver.find_element(By.CSS_SELECTOR,"#btn-load-more > button").click()
+    time.sleep(5)
 
     html = driver.page_source
 
