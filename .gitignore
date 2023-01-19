@@ -56,3 +56,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+#gmail
+client_secret.json

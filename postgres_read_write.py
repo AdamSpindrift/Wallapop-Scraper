@@ -47,11 +47,6 @@ def db_read_write(host,db,user,password,port,dataUpload):
                 print("New Listing")
                 dataInsertionTuples.append(scraped_tuples[i])
         
-        # print("Current Rows - \n")
-        # print(current_rows)
-        print("\n")
-        print("New Rows - \n")
-        print(dataInsertionTuples)
         
         if len(dataInsertionTuples) > 0 :
             dataText = ",".join(cursor.mogrify('(%s,%s,%s)',row).decode("utf-8") for row in dataInsertionTuples)
@@ -71,12 +66,3 @@ def db_read_write(host,db,user,password,port,dataUpload):
             conn.close()
             
         return dataInsertionTuples
-    
-host = os.environ["POSTGRES_HOST"]
-database = "wallapopnintendodb"
-user = os.environ["POSTGRES_USER"]
-password = os.environ["POSTGRES_PASSWORD"]
-port = os.environ["POSTGRES_PORT"]
-
-
-#db_read_write(host,database,user,password,port,some_data)
