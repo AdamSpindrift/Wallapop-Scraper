@@ -24,23 +24,28 @@ def db_read_write(host,db,user,password,port,dataUpload):
         for r in rows:
             r1 = list(r)
             r1.pop(0)
+            r1.pop(3)
             current_rows.append(r1)
         
         scraped_tuples = []
+        scraped_no_date = []
         
         for d in dataUpload:
             
             data_tuple = (d["description"],d["price"],d["img"],time_format)
+            data_tuple_no_date = (d["description"],d["price"],d["img"])
             
             scraped_tuples.append(data_tuple)
+            scraped_no_date.append(data_tuple_no_date)
          
         scraped_list = []
         
-        for i in scraped_tuples:
+        for i in scraped_no_date:
             i1 = list(i)
             scraped_list.append(i1)
                
         dataInsertionTuples = []
+        
         
         for i, s in enumerate(scraped_list):
             #print(i)
