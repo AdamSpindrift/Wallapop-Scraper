@@ -1,10 +1,10 @@
 import psycopg2
 from dotenv.main import load_dotenv
 import os
+import datetime
 
 load_dotenv()
 
-#some_data = [{'description': ' Nintendo switch oled ', 'price': ' 275€ ', 'img': 'https://cdn.wallapop.com/images/10420/ec/78/__/c10420p867019245/i3091343787.jpg?pictureSize=W320'}, {'description': ' Nintendo switch  ', 'price': ' 300€ ', 'img': 'https://cdn.wallapop.com/images/10420/ec/6a/__/c10420p866975857/i3090876014.jpg?pictureSize=W320'}, {'description': ' Nintendo switch oled ', 'price': ' 270€ ', 'img': 'https://cdn.wallapop.com/images/10420/ec/70/__/c10420p867009440/i3091224603.jpg?pictureSize=W320'}]
 
 def db_read_write(host,db,user,password,port,dataUpload):
     
@@ -18,6 +18,9 @@ def db_read_write(host,db,user,password,port,dataUpload):
         rows = cursor.fetchall()
         current_rows = []
         
+        time_now = datetime.datetime.now()
+        time_format = time_now.strftime("%Y-%m-%d")
+        
         for r in rows:
             r1 = list(r)
             r1.pop(0)
@@ -27,7 +30,7 @@ def db_read_write(host,db,user,password,port,dataUpload):
         
         for d in dataUpload:
             
-            data_tuple = (d["description"],d["price"],d["img"])
+            data_tuple = (d["description"],d["price"],d["img"],time_format)
             
             scraped_tuples.append(data_tuple)
          
@@ -49,8 +52,8 @@ def db_read_write(host,db,user,password,port,dataUpload):
         
         
         if len(dataInsertionTuples) > 0 :
-            dataText = ",".join(cursor.mogrify('(%s,%s,%s)',row).decode("utf-8") for row in dataInsertionTuples)
-            SQL = """INSERT INTO nintendo_listings(description,price,img)VALUES {0}""".format(dataText)
+            dataText = ",".join(cursor.mogrify('(%s,%s,%s,%s)',row).decode("utf-8") for row in dataInsertionTuples)
+            SQL = """INSERT INTO nintendo_listings(description,price,img,date)VALUES {0}""".format(dataText)
             cursor.execute(SQL)
             conn.commit()
         else:
