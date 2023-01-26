@@ -5,10 +5,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 LABEL Maintainer="www.adampower.io"
 
 # Install Python
-ENV CHOCO_URL=https://chocolatey.org/install.ps1
-RUN Set-ExecutionPolicy Bypass -Scope Process -Force; \
- [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12'; \
- iex ((New-Object System.Net.WebClient).DownloadString("$env:CHOCO_URL"));
+RUN Set-ExecutionPolicy AllSigned
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 RUN choco install python311
 
 # Any working directory can be chosen as per choice like '/' or '/home' etc
