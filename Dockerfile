@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 LABEL Maintainer="www.adampower.io"
 
 # Install Python
-RUN apt-get update -y
-RUN apt-get install -y python3
+RUN @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+RUN choco install python311
 
 # Any working directory can be chosen as per choice like '/' or '/home' etc
 WORKDIR /user/app/src
