@@ -5,7 +5,8 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 LABEL Maintainer="www.adampower.io"
 
 # Install Python
-RUN Set-ExecutionPolicy AllSigned
+#RUN Set-ExecutionPolicy AllSigned
+RUN Set-ExecutionPolicy Bypass -Scope Process
 RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 RUN choco install python311
 
