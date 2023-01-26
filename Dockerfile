@@ -1,11 +1,8 @@
 #Deriving the latest base image
-FROM mcr.microsoft.com/windows/servercore:ltsc2022
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 #Labels as key value pair
-LABEL Maintainer="adampower.io"
-
-# Install Chrome
-RUN ["./installers/ChromeSetup.exe", "/silent", "/install"]
+LABEL Maintainer="www.adampower.io"
 
 # Install Python
 RUN apt-get update -y
@@ -17,6 +14,9 @@ WORKDIR /user/app/src
 #to COPY the remote file at working directory in container
 COPY . .
 # Now the structure looks like this '/user/app/src/wallapop_schedule.py'
+
+# Install Chrome
+RUN ["./installers/ChromeSetup.exe", "/silent", "/install"]
 
 # install packages
 RUN pip install --no-cache-dir -r requirements.txt --user
